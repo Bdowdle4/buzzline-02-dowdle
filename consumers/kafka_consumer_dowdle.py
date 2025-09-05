@@ -1,7 +1,7 @@
 """
 kafka_consumer_dowdle.py
 
-Consume messages from a Kafka topic and process them.
+Consume Halloween-themed messages from a Kafka topic and process them.
 """
 
 #####################################
@@ -31,35 +31,34 @@ load_dotenv()
 
 def get_kafka_topic() -> str:
     """Fetch Kafka topic from environment or use default."""
-    topic = os.getenv("KAFKA_TOPIC", "unknown_topic")
+    topic = os.getenv("KAFKA_TOPIC", "halloween_topic")
     logger.info(f"Kafka topic: {topic}")
     return topic
 
 
-def get_kafka_consumer_group_id() -> int:
+def get_kafka_consumer_group_id() -> str:
     """Fetch Kafka consumer group id from environment or use default."""
-    group_id: str = os.getenv("KAFKA_CONSUMER_GROUP_ID_JSON", "default_group")
+    group_id: str = os.getenv("KAFKA_CONSUMER_GROUP_ID", "halloween_group")
     logger.info(f"Kafka consumer group id: {group_id}")
     return group_id
 
 
 #####################################
 # Define a function to process a single message
-# #####################################
+#####################################
 
 
 def process_message(message: str) -> None:
     """
-    Process a single message.
+    Process a single Halloween message.
 
-    For now, this function simply logs the message.
-    You can extend it to perform other tasks, like counting words
-    or storing data in a database.
-
-    Args:
-        message (str): The message to process.
+    Logs the message, and raises an alert if it's a special one.
     """
-    logger.info(f"Processing message: {message}")
+    logger.info(f"Processing Halloween message: {message}")
+
+    # Trigger a special alert if the message matches
+    if message == "Trick or Treat!":
+        logger.warning("ALERT: Someone is at the door for Trick or Treat!")
 
 
 #####################################
@@ -75,18 +74,18 @@ def main() -> None:
     - Creates a Kafka consumer using the `create_kafka_consumer` utility.
     - Processes messages from the Kafka topic.
     """
-    logger.info("START consumer.")
+    logger.info("START Halloween consumer.")
 
     # fetch .env content
     topic = get_kafka_topic()
     group_id = get_kafka_consumer_group_id()
-    logger.info(f"Consumer: Topic '{topic}' and group '{group_id}'...")
+    logger.info(f"Consumer subscribed to topic '{topic}' with group '{group_id}'...")
 
     # Create the Kafka consumer using the helpful utility function.
     consumer = create_kafka_consumer(topic, group_id)
 
-     # Poll and process messages
-    logger.info(f"Polling messages from topic '{topic}'...")
+    # Poll and process messages
+    logger.info(f"Polling Halloween messages from topic '{topic}'...")
     try:
         for message in consumer:
             message_str = message.value
@@ -101,7 +100,7 @@ def main() -> None:
         logger.info(f"Kafka consumer for topic '{topic}' closed.")
 
     logger.info(f"END consumer for topic '{topic}' and group '{group_id}'.")
-
+    
 
 #####################################
 # Conditional Execution
