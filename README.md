@@ -74,14 +74,14 @@ Windows:
 
 ```shell
 .venv\Scripts\activate
-py -m producers.kafka_producer_case
+py -m producers.kafka_producer_dowdle
 ```
 
 Mac/Linux:
 
 ```zsh
 source .venv/bin/activate
-python3 -m producers.kafka_producer_case
+python3 -m producers.kafka_producer_dowdle
 ```
 
 ## Task 4. Start a Kafka Consumer
@@ -95,14 +95,14 @@ Windows:
 
 ```shell
 .venv\Scripts\activate
-py -m consumers.kafka_consumer_case
+py -m consumers.kafka_consumer_dowdle
 ```
 
 Mac/Linux:
 
 ```zsh
 source .venv/bin/activate
-python3 -m consumers.kafka_consumer_case
+python3 -m consumers.kafka_consumer_dowdle
 ```
 
 ## Later Work Sessions
